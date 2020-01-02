@@ -294,7 +294,10 @@ module.exports = {
 	    this.showHexViewer = false;
 	    this.updateHistory("filesystem", this.getPath(), "");
 	},
-
+    closeDropdownMenus: function() {
+        this.showUploadMenu = false;
+        this.showSettingsMenu = false;
+    },
 	openInApp: function(filename, app) {
 	    this.selectedFiles = this.files.filter(f => f.getName() == filename);
 	    if (this.selectedFiles.length == 0)
@@ -415,6 +418,7 @@ module.exports = {
 	    return thumb;
         },
         goBackToLevel: function(level) {
+            this.closeDropdownMenus();
             // By default let's jump to the root.
             var newLevel = level || 0,
             path = this.path.slice(0, newLevel).join('/');
@@ -429,6 +433,7 @@ module.exports = {
         },
 
         askMkdir: function() {
+            this.closeDropdownMenus();
             this.prompt_placeholder='Folder name';
             this.prompt_message='Enter a new folder name';
             this.prompt_value='';
@@ -471,6 +476,7 @@ module.exports = {
         },
 
         switchView: function() {
+            this.closeDropdownMenus();
             this.grid = !this.grid;
         },
 
@@ -819,7 +825,8 @@ module.exports = {
             this.showSettingsMenu = !this.showSettingsMenu;
         },
 
-        toggleFeedbackForm: function() { 
+        toggleFeedbackForm: function() {
+            this.closeDropdownMenus();
             this.showFeedbackForm = !this.showFeedbackForm;
         },
 
@@ -864,6 +871,7 @@ module.exports = {
         },
 
         showSocialView: function(name) {
+            this.closeDropdownMenus();
             this.showSocial = true;
             this.externalChange++;
         },
@@ -993,6 +1001,7 @@ module.exports = {
 
         changePath: function(path) {
             console.debug('Changing to path:'+ path);
+            this.closeDropdownMenus();
             if (path.startsWith("/"))
                 path = path.substring(1);
             this.path = path ? path.split('/') : [];
@@ -1197,6 +1206,7 @@ module.exports = {
         },
 
         openMenu: function(e, file) {
+            this.closeDropdownMenus();
             if (this.ignoreEvent) {
                 e.preventDefault();
                 return;
